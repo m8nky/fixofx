@@ -25,8 +25,11 @@ import sys
 import unittest
 
 def suite():
-    modules_to_test = ['ofxtools_qif_converter', 'mock_ofx_server',
-                       'ofx_account', 'ofx_builder', 'ofx_client',
+    # modules requiring wsgi_intercept
+    network_modules = ['mock_ofx_server', 'ofx_client', ]
+    
+    modules_to_test = ['ofxtools_qif_converter', 
+                       'ofx_account', 'ofx_builder',
                        'ofx_document', 'ofx_error', 'ofx_parser',
                        'ofx_request', 'ofx_response', 'ofx_validators',
                        'ofc_parser', 'ofc_converter']
