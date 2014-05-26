@@ -13,8 +13,8 @@
 # limitations under the License.
 
 import sys
-sys.path.insert(0, '../3rdparty')
-sys.path.insert(0, '../lib')
+
+
 
 import ofx
 import ofx_test_utils

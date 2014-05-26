@@ -13,8 +13,8 @@
 # limitations under the License.
 
 import sys
-sys.path.insert(0, '../3rdparty')
-sys.path.insert(0, '../lib')
+
+
 
 from ofx.builder import *
 from ofx.builder import Tag  # not exported by default
