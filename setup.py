@@ -36,7 +36,7 @@ if __name__ == "__main__":
             'License :: ',
             'Topic :: '
             ],
-        install_requires=[],
+        install_requires=['python-dateutil', 'pyparsing'],
         packages=find_packages(),
         include_package_data=True,
         zip_safe=False,
