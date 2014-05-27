@@ -143,18 +143,8 @@ class Generator:
 
         for date in self.date_list:
             txn_list = self.txns_by_date[date]
-            txn_index = len(txn_list)
             for txn in txn_list:
-                txn_date = txn.date
-                txn_amt  = txn.amount
-
-                # Make a synthetic transaction ID using as many
-                # uniqueness guarantors as possible.
-                txn.txid = "%s-%s-%s-%s-%s" % (self.org, self.accttype,
-                                                txn_date, txn_index,
-                                                txn_amt)
                 txns += txn.to_ofx()
-                txn_index -= 1
 
         return BANKTRANLIST(
             DTSTART(self.startdate),
@@ -191,7 +181,7 @@ class Transaction:
             fields.append(CHECKNUM(self.number))
 
         if self.txid is None:
-            self.txid = uuid.generate().upper()
+            self.txid = uuid.uuid4()
 
         fields.append(FITID(self.txid))
         fields.append(NAME(self.payee))
