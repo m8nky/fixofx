@@ -38,7 +38,7 @@ class Response(ofx.Document):
 
         parser = ofx.Parser(debug)
         self.parse_dict = parser.parse(self.raw_response)
-        self.ofx = self.parse_dict["body"]["OFX"].asDict()
+        self.ofx = self.parse_dict["body"]["OFX"][0]
 
     def as_dict(self):
         return self.ofx
