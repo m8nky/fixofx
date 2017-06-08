@@ -8,7 +8,7 @@ MAINTAINER_EMAIL = ''
 URL = ''
 LICENSE = 'Apache 2.0'
 DOWNLOAD_URL = ''
-VERSION = '0.1'
+VERSION = '0.1a'
 
 import os
 from setuptools import setup, find_packages
