@@ -11,36 +11,11 @@ DOWNLOAD_URL = ''
 VERSION = '0.1'
 
 import os
-import setuptools
-#from numpy.distutils.core import setup
-from setuptools import setup
+from setuptools import setup, find_packages
 try:
     from distutils.command.build_py import build_py_2to3 as build_py
 except ImportError:
     from distutils.command.build_py import build_py
-
-
-def configuration(parent_package='', top_path=None):
-
-    if os.path.exists('MANIFEST'):
-        os.remove('MANIFEST')
-
-    from numpy.distutils.misc_util import Configuration
-
-    config = Configuration(None, parent_package, top_path)
-
-    config.set_options(
-        ignore_setup_xxx_py=True,
-        assume_default_configuration=True,
-        delegate_options_to_subpackages=True,
-        quiet=True
-        )
-
-    config.add_subpackage('ofx', 'lib/ofx', True)
-    config.add_subpackage('ofxtools', 'lib/ofxtools', True)
-
-    return config
-
 
 if __name__ == "__main__":
     setup(
@@ -61,12 +36,10 @@ if __name__ == "__main__":
             'License :: ',
             'Topic :: '
             ],
-
-        configuration=configuration,
-        install_requires=[],
-        packages=setuptools.find_packages(),
+        install_requires=['python-dateutil', 'pyparsing'],
+        packages=find_packages(),
         include_package_data=True,
-        zip_safe=True,
+        zip_safe=False,
 
         cmdclass={'build_py': build_py},
 
@@ -74,4 +47,5 @@ if __name__ == "__main__":
             'console_scripts': [
                 'fixofx = fixofx',
             ],
-        )
+        }
+    )
