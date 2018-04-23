@@ -78,7 +78,7 @@ class Parser:
         ofx = self.strip_blank_dtasof(ofx)
         ofx = self.strip_junk_ascii(ofx)
         ofx = self.fix_unknown_account_type(ofx)
-        return self.parser.parseString(ofx).asDict()
+        return self.parser.parseString(ofx)
 
     def strip_close_tags(self, ofx):
         """Strips close tags on non-aggregate nodes.  Close tags seem to be

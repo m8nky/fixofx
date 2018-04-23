@@ -138,7 +138,7 @@ class QifConverter:
         self._clean_txn_list(txn_list)
 
     def _extract_txn_list(self, qif):
-        stmt_obj = qif.asDict()["QifStatement"]
+        stmt_obj = qif["QifStatement"]
 
         if self.accttype == "UNKNOWN":
             if "BankTransactions" in stmt_obj:
@@ -275,7 +275,13 @@ class QifConverter:
         self._clean_txn_amount(txn)
         self._clean_txn_number(txn)
         self._clean_txn_type(txn)
-        self._clean_txn_payee(txn)
+        # HHA: 23.04.2018 - FIX: Extract multiple memo entries in repeated elements. The parser
+        #      is configured to extract only flat values, which prunes parts of the memo field.
+        #      For more details, see this section at the link below:
+        #        Don't use a results name for a repeated element. If you do, only the last one
+        #        will be accessible by results name in the ParseResults.
+        #      http://infohost.nmt.edu/tcc/help/pubs/pyparsing/web/struct-results-name.html
+        self._clean_txn_memo(txn, txn_obj)
         return txn
 
     def _clean_txn_date(self, txn):
@@ -461,6 +467,13 @@ class QifConverter:
 
         elif not txn.has_key("Type") and txn_sign == "credit":
             txn["Type"] = "CREDIT"
+
+    def _clean_txn_memo(self, txn, txn_obj):
+        assert len(txn_obj) in [4, 5]
+        memo = txn_obj[2]
+        if len(txn_obj) == 5:
+            memo += " - " + txn_obj[3]
+        txn['Memo'] = memo
 
     def _txn_sign(self, txn_amount):
         # Is this a credit or a debit?
